@@ -1,4 +1,4 @@
-const V="ahadith-v14",DATA="ahadith-data";
+const V="ahadith-v16",DATA="ahadith-data";
 const SHELL=["./","index.html","offline.html","manifest.json","icon-180.png","icon-192.png","icon-512.png","icon-maskable-512.png"];
 self.addEventListener("install",e=>{e.waitUntil(caches.open(V).then(c=>c.addAll(SHELL)).then(()=>self.skipWaiting()))});
 self.addEventListener("activate",e=>{e.waitUntil(caches.keys().then(k=>Promise.all(k.filter(x=>x.startsWith("ahadith-v")&&x!=V).map(x=>caches.delete(x)))).then(()=>self.clients.claim()))});
