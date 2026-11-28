@@ -29,7 +29,7 @@ svg.i{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stro
 .bar.sc b{opacity:1}
 .ib{width:40px;height:40px;border-radius:50%;border:0;background:transparent;display:grid;place-items:center;color:var(--pri);cursor:pointer}
 .pages{position:absolute;inset:0;overflow:hidden}
-.page{position:absolute;inset:0;overflow-y:auto;padding:calc(56px + var(--st)) 0 calc(94px + var(--nb));transition:transform .55s var(--e);-webkit-overflow-scrolling:touch}
+.page{position:absolute;inset:0;overflow-y:auto;padding:calc(56px + var(--st)) 0 calc(94px + var(--nb));transition:transform .42s ease-out;will-change:transform;backface-visibility:hidden;transform:translate3d(0,0,0);-webkit-overflow-scrolling:touch}
 .lt{font-size:32px;font-weight:700;margin:6px 20px 14px}
 .sh{font-size:20px;margin:22px 20px 10px}
 .hero{margin:0 16px;padding:20px;border-radius:28px;color:#fff;background:linear-gradient(135deg,#0a4a39,#12896a 60%,#c9a24a);box-shadow:var(--sh)}
@@ -66,7 +66,7 @@ nav{position:absolute;bottom:var(--nb);left:16px;right:16px;height:64px;border-r
 nav .ind{position:absolute;top:6px;bottom:6px;right:6px;width:calc((100% - 12px)/4);border-radius:20px;background:color-mix(in srgb,var(--pri) 18%,transparent);transition:transform .55s var(--e)}
 nav button{flex:1;position:relative;border:0;background:none;color:var(--mut);font-size:11px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;transition:color .3s}
 nav button.on{color:var(--pri)}
-.layer{position:absolute;inset:0;z-index:6;background:var(--bg);transform:translateX(-104%);transition:transform .5s var(--e);box-shadow:var(--sh)}
+.layer{position:absolute;inset:0;z-index:6;background:var(--bg);transform:translate3d(-104%,0,0);transition:transform .42s ease-out;will-change:transform;backface-visibility:hidden;box-shadow:var(--sh)}
 .layer.on{transform:none}
 .lb{position:absolute;inset:0;overflow-y:auto;padding:calc(70px + var(--st)) 0 calc(40px + var(--sb))}
 .back{position:fixed;inset:0;background:rgba(0,0,0,.4);opacity:0;pointer-events:none;transition:opacity .4s;z-index:20}
@@ -413,7 +413,7 @@ document.querySelectorAll(".page").forEach((p,i)=>p.onscroll=()=>{if(i==tab)$("b
 }
 function favPage(){$("p3").innerHTML=`<h2 class="lt">المفضلة</h2>`+(favs.length?`<div class="list">${favs.map((f,k)=>card(f,k,1)).join("")}</div>`:`<div class="empty">لا توجد أحاديث مفضلة بعد.<br>اضغط على القلب لحفظ ما يعجبك.</div>`)}
 const TT=["أحاديث النبي ﷺ","الأذكار","القرآن الكريم","المفضلة"];
-function go(t){tab=t;document.querySelectorAll(".page").forEach((p,i)=>p.style.transform=`translateX(${(t-i)*100}%)`);$("ind").style.transform=`translateX(${-t*100}%)`;document.querySelectorAll("nav button").forEach((b,i)=>b.classList.toggle("on",i==t));$("bt").textContent=TT[t];$("bar").classList.toggle("sc",$("p"+t).scrollTop>40);if(t==3)favPage()}
+function go(t){tab=t;document.querySelectorAll(".page").forEach((p,i)=>p.style.transform=`translate3d(${(t-i)*100}%,0,0)`);$("ind").style.transform=`translate3d(${-t*100}%,0,0)`;document.querySelectorAll("nav button").forEach((b,i)=>b.classList.toggle("on",i==t));$("bt").textContent=TT[t];$("bar").classList.toggle("sc",$("p"+t).scrollTop>40);if(t==3)favPage()}
 function layer(n,title,html){$("lt"+S(n)).textContent=title;$("lb"+S(n)).innerHTML=html;$("lb"+S(n)).scrollTop=0;$("ly"+S(n)).classList.add("on")}
 async function openBook(k){const b=BK.find(x=>x.k==k);cur=b;layer(1,b.n,spin);
 try{let m=SC[b.ed];if(!m){const f=await full(b);if(f)m=SC[b.ed]=f.metadata.section||{};else{const d=await jget("/editions/"+b.ed+"/sections/1");m=SC[b.ed]=d.metadata.section||{}}}
@@ -665,7 +665,7 @@ function hap(){try{if(navigator.vibrate){navigator.vibrate(8);return}const l=doc
 .w.ms{background:#ffb3b3;color:#5a0000}
 .w.cur{outline:2px dashed #d4a017;outline-offset:2px}
 .hid .w:not(.ok):not(.ms){filter:blur(7px);opacity:.55}
-#tlp{position:absolute;right:10px;left:auto;width:min(190px,calc(100% - 20px));bottom:calc(78px + var(--sb));z-index:32;border-radius:16px;padding:8px 9px 7px;color:#fdf6e3;background:#0b3d2e;transform:translateY(160%);transition:transform .4s var(--e);box-shadow:0 10px 24px rgba(0,0,0,.35);overflow:hidden;font-family:Tajawal,sans-serif}
+#tlp{position:absolute;right:10px;left:10px;width:auto;bottom:calc(10px + var(--sb));z-index:32;border-radius:12px;padding:8px 10px 7px;color:#fdf6e3;background:#0b3d2e;transform:translateY(160%);transition:transform .4s var(--e);box-shadow:0 10px 24px rgba(0,0,0,.35);overflow:hidden;font-family:Tajawal,sans-serif}
 #tlp::before{content:"";position:absolute;inset:0;opacity:.13;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cg fill='none' stroke='%23f5d77a' stroke-width='1.2'%3E%3Cpath d='M30 4l7 19 19 7-19 7-7 19-7-19-19-7 19-7z'/%3E%3Crect x='17' y='17' width='26' height='26' transform='rotate(45 30 30)'/%3E%3Crect x='17' y='17' width='26' height='26'/%3E%3C/g%3E%3C/svg%3E")}
 #tlp.on{transform:none}#qb .w{cursor:pointer}#qb .w:active{background:color-mix(in srgb,var(--qa) 18%,transparent)}.reciter-strip{display:flex;gap:8px;overflow-x:auto;scroll-snap-type:x mandatory;padding:4px 16px 12px;scrollbar-width:none}.reciter-strip::-webkit-scrollbar{display:none}.reciter-strip .rw{flex:0 0 160px;scroll-snap-align:start;border:1px solid color-mix(in srgb,var(--qa) 35%,transparent);border-radius:16px;background:color-mix(in srgb,var(--qa) 9%,transparent);padding:10px}.reciter-strip .rw+.rw{border-top:0}
 #tlp>*{position:relative}
@@ -700,7 +700,7 @@ const SVG={mic:'<svg viewBox="0 0 24 24"><path d="M12 3a3 3 0 0 1 3 3v5a3 3 0 0 
 const q=$("qy");
 q.insertAdjacentHTML("beforeend",`<div id="tlbk"></div><div id="tlm"><button data-tm="t"><i>${SVG.mic}</i>تلاوة · أنا أقرأ</button><button data-tm="l"><i>${SVG.hp}</i>استماع · صوت القارئ</button><button data-tm="h"><i>${SVG.br}</i>اختبار الحفظ · غيب</button></div><button id="tlf" aria-label="التلاوة والحفظ"><span class="st"></span><span class="ci">${SVG.mic}</span></button>
 <div id="tlp"><div class="tlh"><b id="tlt">تلاوة</b><button id="tlhd">غيب</button><button id="tllg">سجلي</button></div><canvas id="tlw"></canvas><div class="tlbar"><i id="tlpg"></i></div><div class="tlr"><span id="tlpc">٠٪</span><span id="tlrp"></span><button id="tlrs">إعادة</button><button class="stop" id="tlst">إنهاء</button></div><div id="tlhint">ابدأ القراءة…</div></div>`);
-const sv2=el=>{const b=$("qb");if(!el||!b)return;const r=el.getBoundingClientRect(),br=b.getBoundingClientRect(),target=b.scrollTop+r.top-br.top-b.clientHeight*.28,max=Math.max(0,b.scrollHeight-b.clientHeight);if(r.top<br.top+b.clientHeight*.18||r.bottom>br.bottom-b.clientHeight*.22)b.scrollTo({top:Math.max(0,Math.min(max,target)),behavior:"smooth"})};const fab=$("tlf"),menu=$("tlm"),bk=$("tlbk"),pan=$("tlp"),cv=$("tlw"),cx=cv.getContext("2d");
+const sv2=el=>{const b=$("qb");if(!el||!b)return;const r=el.getBoundingClientRect(),br=b.getBoundingClientRect(),panel=act?$("tlp"):null,pr=panel?panel.getBoundingClientRect():null,limit=pr?pr.top-18:br.bottom-b.clientHeight*.22,target=b.scrollTop+r.top-br.top-b.clientHeight*.28,max=Math.max(0,b.scrollHeight-b.clientHeight);if(r.top<br.top+b.clientHeight*.18||r.bottom>limit)b.scrollTo({top:Math.max(0,Math.min(max,target)),behavior:"smooth"})};const fab=$("tlf"),menu=$("tlm"),bk=$("tlbk"),pan=$("tlp"),cv=$("tlw"),cx=cv.getContext("2d");
 const NZ=s=>s.replace(/[\u0610-\u061A\u064B-\u065F\u0670\u06D6-\u06ED\u0640]/g,"").replace(/[ٱأإآ]/g,"ا").replace(/ى/g,"ي").replace(/ة/g,"ه").replace(/ؤ/g,"و").replace(/ئ/g,"ي").replace(/[^\u0621-\u064A]/g,"");
 const SK=s=>s.replace(/[اويء]/g,"");
 function lev(a,b){const m=a.length,n=b.length;if(!m)return n;if(!n)return m;let p=[...Array(n+1).keys()];for(let i=1;i<=m;i++){let c=[i];for(let j=1;j<=n;j++)c[j]=Math.min(p[j]+1,c[j-1]+1,p[j-1]+(a[i-1]==b[j-1]?0:1));p=c}return p[n]}
