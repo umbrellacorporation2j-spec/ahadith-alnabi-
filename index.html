@@ -773,8 +773,9 @@ q.addEventListener("click",e=>{if(e.target.closest("[data-vm]"))return;const ver
 fab.addEventListener("contextmenu",e=>e.preventDefault());
 fab.addEventListener("pointerdown",e=>{lp=false;hv=null;try{fab.setPointerCapture(e.pointerId)}catch(x){}lt=setTimeout(()=>{lp=true;openM()},380)});
 fab.addEventListener("pointermove",e=>{if(!lp)return;const el=document.elementFromPoint(e.clientX,e.clientY),b=el&&el.closest("#tlm button");if(b!=hv){menu.querySelectorAll(".hv").forEach(x=>x.classList.remove("hv"));hv=b;if(b){b.classList.add("hv");if(cfg.hap)hap()}}});
-fab.addEventListener("pointerup",()=>{clearTimeout(lt);if(lp){if(hv)pick(hv.dataset.tm)}else{menu.classList.contains("on")?closeM():openM()}});
+fab.addEventListener("pointerup",()=>{clearTimeout(lt);if(lp){if(hv)pick(hv.dataset.tm)}else if(!act){openM()}else{menu.classList.contains("on")?closeM():openM()}});
 fab.addEventListener("pointercancel",()=>clearTimeout(lt));
+fab.addEventListener("click",e=>{e.preventDefault();if(!act)openM()});
 menu.addEventListener("click",e=>{const b=e.target.closest("[data-tm]");if(b)pick(b.dataset.tm)});bk.onclick=closeM;
 $("tlst").onclick=()=>finish(false);$("tlrs").onclick=()=>{rep=0;accs=[];W.forEach(w=>w.classList.remove("ok","ms"));ptr=0;base=0;restart();paint()};
 $("tlhd").onclick=()=>{hide=!hide;q.classList.toggle("hid",hide);$("tlhd").classList.toggle("on",hide)};$("tllg").onclick=logs;
